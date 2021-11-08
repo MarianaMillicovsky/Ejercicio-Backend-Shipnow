@@ -31,17 +31,49 @@ class User
         end
     end
 
-    def create_persisted_user 
+    def create_user_command(input) 
+        for i in 12..(input.length-1)                               #create_user username password
+            if (input[i] == " ") 
+                @new_name = input[12..i-1]
+                @new_password = input[i+1..(input.length-1)]     # descuento los " "
+                break
+            end     
+        end
+        puts @new_name 
+        puts @new_password
+        if @data_users.key?(@new_name)
+            puts "=> That username already exists. Try again." 
+        elsif @new_name.length < 2
+            puts "=> Invalid username"
+        else
+            @data_users[@new_name] = @new_password
+            puts "New user #{@new_name} created."
+        end
     end
 
-    def login_persisted_user   
+    def login_user_command(input)  
+        for i in 6..(input.length-1)                               #create_user username password
+            if (input[i] == " ") 
+                @user_name = input[6..i-1]
+                @user_password = input[i+1..(input.length-1)]     # descuento los " "
+                break
+            end     
+        end
+        puts @user_name 
+        puts @user_password
+        if @data_users.key?(@user_name) && (@data_users[@user_name.to_s] == @user_password.to_s)
+            @current_user = @user_name
+            return "passed"
+        else
+            puts "Sorry, try again. " 
+        end     
     end
 
     def whoami
         puts "Current user: #{@current_user}" 
     end
 
-    def check(persistence)
+    def check(persistence)         ## Funcion en caso de pedir registro al inicio
         if !persistence
             loop do 
                 puts "  => Please type your username to sign in. \n  => To sign up, press enter."
