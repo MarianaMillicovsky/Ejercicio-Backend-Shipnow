@@ -1,0 +1,34 @@
+Help:
+- This manager allows to create/delete files with .txt format. 
+
+-Avaiable commands: 
+
+[create_file file "content"]        =>  creates a file in current path,  
+                                        with title: 'file' and content: 'content', type: .txt
+                                        file's tittle cannot have spaces
+
+[create_folder folder]              =>  creates a folder in current path, with title: 'folder'
+
+[delete file]                       =>  deletes a file titled 'file' or 'file.txt'
+
+[delete folder]                     =>  deletes a folder titled 'folder'
+
+[ls]                                =>  show avaiable files/folder iin current directory
+
+[cd ..]                            
+
+[cd folder]
+
+[show file]                         =>  show file content
+
+[metadata file]                     =>  show file's metadata
+
+[whereami]                          =>  shows your actual path
+
+- If you enter by typing 'ruby consola -persisted file',
+ your work will be saved in disc, 
+ else you'll lose it when closing the console.
+
+- Files/folder's tittles cannot be written with spaces between characters. 
+
+- To quit the console, type 'exit'/'quit'.
