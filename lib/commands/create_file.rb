@@ -13,8 +13,8 @@ module CommandsHelper
             return [file_name, file_content]
         end
 
-        def self.create_file(file_aux, path)
-            metadata = CommandsHelper::MetadataFile.get_not_persisted_metadata(file_aux[0], file_aux[1], path) 
+        def self.create_file(file_aux, path, current_user)
+            metadata = CommandsHelper::MetadataFile.get_not_persisted_metadata(file_aux[0], file_aux[1], path, current_user) 
             return [file_aux[0], file_aux[1], metadata]
         end
 

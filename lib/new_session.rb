@@ -8,10 +8,10 @@ class NewSession
     @file_id = 0                    
   end
   
-  def add_new_file(input)   
+  def add_new_file(input, current_user)   
     path = Array.new(@current_path)
     file_aux = CommandsHelper::CreateFile.get_file(input) # gets [name, content]
-    file = CommandsHelper::CreateFile.create_file(file_aux, path) # gets [name,content,metadata]
+    file = CommandsHelper::CreateFile.create_file(file_aux, path, current_user) # gets [name,content,metadata]
     if (@actual_folder.has_key?(file[0])) && (@actual_folder[file[0]].class == String)
       puts "#{file[0]} already exists."
     else
@@ -90,7 +90,9 @@ class NewSession
     file_name = CommandsHelper::ShowFile.get_file_name(input)
     if (@actual_folder.has_key?(file_name)) && (@actual_folder[file_name].class == String)
       id = @actual_folder[file_name]
+      puts ''
       puts @data_file[id][1]
+      puts ''
     else 
      puts 'File not found.' 
     end

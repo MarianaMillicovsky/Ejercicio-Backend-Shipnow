@@ -6,7 +6,7 @@ module CommandsHelper
             return file_name
         end
 
-        def self.get_not_persisted_metadata(file_name, file_content, path)
+        def self.get_not_persisted_metadata(file_name, file_content, path, current_user)
             path = path.map! {|x| x + "/" }      # path =>  [ "home/", "b/", "c/", "d/" ]
             path = path.join            #   "home/b/c/d/"
             metadata = ['', 
@@ -17,7 +17,7 @@ module CommandsHelper
                         'Date created: ' + Time.now.to_s, 
                         'Date modified: ' + Time.now.to_s,
                         'Attributes: ' + 'A',
-                        'Owner: ' + 'current_user',
+                        'Owner: ' + current_user,
                         '' ]    
                     return metadata                     
         end

@@ -7,6 +7,8 @@ class Repl
       @new_session = NewSession.new()
       @new_session_persisted = NewSessionPersisted.new()
       @persistence = false
+      @user = User.new()
+      @check = false #parameter to check if user is logged
     end
   
     def run
@@ -23,11 +25,13 @@ class Repl
         @persistence = false
       end
       print "Welcome to Files&Folders Manager console, for help, please type '-help'\nType exit/quit to end the session.\n"
+      @check = @user.check(persistence)
     end
 
     def in_loop
       @new_session_persisted.first_folder if @persistence# && (check == "passed")   -aun no se hizo el checkeo de usuarios con persistencia en disco-
       loop do
+        break unless (check == "passed") || (persistence)  # aun no se hizo el checkeo  de usuario con persistencia
         print "[#{@line_length}] #{REPL_PROMPT}"
 
         #input = Readline.readline("> ", true)   #using Readline -third-party library-
@@ -45,7 +49,8 @@ class Repl
           begin
             case input
             when /create_file ([a-zA-Z0-9_.])+ (('(.{0,})')||("(.{0,})"))$/      #COMMAND: create_file file1 'c1'
-              @new_session.add_new_file(input) if !persistence
+              current_user = @user.current_user
+              @new_session.add_new_file(input, current_user) if !persistence
               @new_session_persisted.add_new_file(input) if persistence
             when /^show ([a-zA-Z0-9_. ]+$)$/                                     #COMMAND: show file1
               @new_session.show_file(input) if !persistence
