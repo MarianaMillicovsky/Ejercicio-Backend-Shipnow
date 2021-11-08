@@ -24,7 +24,6 @@ class User
             else
                 puts "=> Please type your new password" 
                 @new_password = gets.chomp() 
-                @new_password.strip!
                 @data_users[@new_name] = @new_password
                 puts "New user #{@new_name} created."
                 break 
@@ -45,7 +44,7 @@ class User
     def check(persistence)
         if !persistence
             loop do 
-                puts "  => Please type your username to sign up. \n  => To sign in, press enter."
+                puts "  => Please type your username to sign in. \n  => To sign up, press enter."
                 input_aux = STDIN.gets.chomp
                 if (input_aux === 'exit') || (input_aux === 'quit') 
                     break
