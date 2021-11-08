@@ -1,4 +1,4 @@
-class NewSession 
+class NewSession  
   attr_accessor :data, :actual_folder, :current_path, :data_file, :file_id
   def initialize
     @data = { "home" => {} }        #Hash

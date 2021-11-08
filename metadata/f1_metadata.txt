@@ -1,0 +1,9 @@
+
+Name: f1.txt
+Type: .txt
+Folder path: /home/mariana/a/Ejercicio-Backend-Shipnow/home
+Size: 2 characters
+Date created: 2021-11-08 16:29:29 -0300
+Date modified: 2021-11-08 16:29:29 -0300
+Attributes: A
+Owner: current_user

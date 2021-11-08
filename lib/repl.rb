@@ -1,10 +1,12 @@
 class Repl 
     REPL_PROMPT = 'FFM_REPL > '                  
   
-   attr_accessor :line_length, :new_session
+   attr_accessor :line_length, :persistence, :new_session, :new_session_persisted, :check
     def initialize
       @line_length = 1
       @new_session = NewSession.new()
+      @new_session_persisted = NewSessionPersisted.new()
+      @persistence = false
     end
   
     def run
@@ -15,12 +17,17 @@ class Repl
   
     private
     def before_loop
+      if ARGF.argv == ['-persisted', 'file']
+        @persistence = true
+      else
+        @persistence = false
+      end
       print "Welcome to Files&Folders Manager console, for help, please type '-help'\nType exit/quit to end the session.\n"
     end
 
     def in_loop
+      @new_session_persisted.first_folder if @persistence# && (check == "passed")   -aun no se hizo el checkeo de usuarios con persistencia en disco-
       loop do
-        #break unless (check == "passed") || (persistence)  # aun no se hizo el checkeo  de usuario con persistencia
         print "[#{@line_length}] #{REPL_PROMPT}"
 
         #input = Readline.readline("> ", true)   #using Readline -third-party library-
@@ -38,23 +45,32 @@ class Repl
           begin
             case input
             when /create_file ([a-zA-Z0-9_.])+ (('(.{0,})')||("(.{0,})"))$/      #COMMAND: create_file file1 'c1'
-              @new_session.add_new_file(input) 
+              @new_session.add_new_file(input) if !persistence
+              @new_session_persisted.add_new_file(input) if persistence
             when /^show ([a-zA-Z0-9_. ]+$)$/                                     #COMMAND: show file1
-              @new_session.show_file(input) 
+              @new_session.show_file(input) if !persistence
+              @new_session_persisted.show_file(input) if persistence
             when /^metadata (.+$)$/                                              #COMMAND: metadata file1   
-              @new_session.metadata(input)    
+              @new_session.metadata(input) if !persistence   
+              @new_session_persisted.metadata(input) if persistence   
             when /^create_folder ([a-zA-Z0-9_.]+$)$/                             #COMMAND: create_folder folder1
-              @new_session.add_new_folder(input) 
+              @new_session.add_new_folder(input) if !persistence
+              @new_session_persisted.add_new_folder(input) if persistence
             when /^cd (\.\.$)/                                                   #COMMAND: cd ..
-              @new_session.cd_back_command 
+              @new_session.cd_back_command if !persistence
+              @new_session_persisted.cd_back_command if persistence
             when /^cd (.+$)$/                                                    #COMMAND: cd folder1
-              @new_session.cd_enter_command(input)  
+              @new_session.cd_enter_command(input) if !persistence 
+              @new_session_persisted.cd_enter_command(input) if persistence 
             when /^destroy ([a-zA-Z0-9_.]+$)$/                                   #COMMAND: destroy file1/folder1    
-              @new_session.destroy_file_folder(input) 
+              @new_session.destroy_file_folder(input) if !persistence
+              @new_session_persisted.destroy_file_folder(input) if persistence
             when /^ls$/                                                          #COMMAND: ls
-              @new_session.ls_command 
+              @new_session.ls_command if !persistence
+              @new_session_persisted.ls_command if persistence
             when /^whereami$/                                                    #COMMAND: whereami
-              @new_session.whereami 
+              @new_session.whereami if !persistence
+              @new_session_persisted.whereami if persistence
             when /^whoami$/
               @user.whoami
             else
