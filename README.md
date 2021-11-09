@@ -6,7 +6,7 @@
 
 ### Opciones de inicio de la consola:
 
-##### Los recursos son mantenidos en memoria. Requiere crear un usuario/contraseña al inicio.
+##### Los recursos son mantenidos en memoria. Requiere crear un usuario/contraseña para modificar un archivo o carpeta.
     ruby consola.rb
     
 ##### Los recursos sonpersistidos a disco. No requiere crear usuario/contrasena.
