@@ -1,0 +1,3 @@
+class NewSessionPersisted 
+    
+end
